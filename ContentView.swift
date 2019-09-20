@@ -60,7 +60,7 @@ struct ContentView: View {
                     HStack {
                         URLImage(self.slackController.emojiUrl(emoji: myStatus.emoji), configuration: ImageLoaderConfiguration(delay: 0.25))
                             .resizable()
-//                            .frame(width: 50.0, height: 50.0, alignment: .leading)
+                            .frame(width: 50.0, height: 50.0, alignment: .leading)
                             .clipped()
                         Text(myStatus.description)
                         Text(String(myStatus.expireHours) + " hours")
