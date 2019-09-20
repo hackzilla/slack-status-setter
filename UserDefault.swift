@@ -1,29 +1,21 @@
-//
-//  UserDefault.swift
-//  Status Setter
-//
-//  Created by Daniel Platt on 18/09/2019.
-//  Copyright © 2019 Daniel Platt. All rights reserved.
-//
+// https://stackoverflow.com/a/56823953/157656
 
 import Foundation
 
 @propertyWrapper
-struct UserDefault<T> {
+struct UserDefault<Value: Codable> {
     let key: String
-    let defaultValue: T
+    let defaultValue: Value
 
-    init(_ key: String, defaultValue: T) {
-        self.key = key
-        self.defaultValue = defaultValue
-    }
-
-    var wrappedValue: T {
+    var wrappedValue: Value {
         get {
-            return UserDefaults.standard.object(forKey: key) as? T ?? defaultValue
+            let data = UserDefaults.standard.data(forKey: key)
+            let value = data.flatMap { try? JSONDecoder().decode(Value.self, from: $0) }
+            return value ?? defaultValue
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: key)
+            let data = try? JSONEncoder().encode(newValue)
+            UserDefaults.standard.set(data, forKey: key)
         }
     }
 }

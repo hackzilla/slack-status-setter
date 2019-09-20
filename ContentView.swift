@@ -13,18 +13,26 @@ import Combine
 import SwiftUI
 import URLImage
 
-//struct SettingView: View {
-//    var body: some View {
-//        VStack {
-//            Text("SwiftUI")
-//            Divider()
-//            Text("SwiftUI")
-//            Divider()
-//            Text("SwiftUI")
-//        }
-//        .navigationBarTitle(Text("Settings"), displayMode: .inline)
-//    }
-//}
+struct SettingView: View {
+    @ObservedObject var userData = UserData()
+
+    var body: some View {
+        Form {
+            Section {
+                Text("Slack API Token")
+                TextField("Slack API Token", text: $userData.apiToken)
+            }
+            Section {
+                Button(action: {
+//                    self.settings.apiToken = self.apiToken
+                }) {
+                    Text("Save changes")
+                }
+            }
+        }
+        .navigationBarTitle(Text("Settings"), displayMode: .inline)
+    }
+}
 
 struct EditView: View {
     var status: Status
@@ -43,49 +51,47 @@ struct EditView: View {
 
 struct ContentView: View {
     private var slackController = Slack()
-    @ObservedObject var settings = UserSettings()
-    @State private var statuses : [Status] = [
-        Status(id: 0, emoji: ":spiral_calendar_pad:", description: "In a meeting", expireHours: 1),
-        Status(id: 1, emoji: ":car:", description: "Commuting", expireHours: 12),
-        Status(id: 2, emoji: ":computer:", description: "Working remotely", expireHours: 12),
-        Status(id: 3, emoji: ":palm_tree:", description: "On holiday", expireHours: 0),
-        Status(id: 4, emoji: ":house_with_garden:", description: "Working from home", expireHours: 12),
-        Status(id: 5, emoji: ":slack:", description: "Building something awesome!", expireHours: 48),
-    ]
-    
+    @ObservedObject var userData = UserData()
+
     var body: some View {
         return NavigationView {
             List {
-                ForEach(statuses) { myStatus in
+                ForEach(self.userData.statuses) { myStatus in
                     HStack {
                         URLImage(self.slackController.emojiUrl(emoji: myStatus.emoji), configuration: ImageLoaderConfiguration(delay: 0.25))
-                        .resizable()
-                        .frame(width: 50.0, height: 50.0)
-                        .clipped()
+                            .resizable()
+//                            .frame(width: 50.0, height: 50.0, alignment: .leading)
+                            .clipped()
                         Text(myStatus.description)
                         Text(String(myStatus.expireHours) + " hours")
                             .frame(maxWidth: .infinity, alignment: .trailing)
                     }
+//                    .onDelete(perform: delete)
 
                 }
-//                .onDelete(perform: delete)
+                Spacer()
+                Button(action: {
+                    self.userData.statuses.append(
+                        Status(emoji: ":slack:", description: "Being inspired", expireHours: 1)
+                        )
+                    print(self.userData.statuses)
+                }) {
+                    Text("Add new status")
+                        
+                }
             }
             .navigationBarTitle(Text("Statuses"))
-//            .navigationBarItems(
-//                trailing:
-//                NavigationLink(destination: EditView(status: myStatus)) {
-//                    Image(systemName: "gear")
-//                }
-//            )
+            .navigationBarItems(
+                trailing:
+                NavigationLink(destination: SettingView()) {
+                    Image(systemName: "gear")
+                }
+            )
         }
     }
-    
-    mutating func add() {
-//        statuses.append(Status)
-    }
-    
+      
     mutating func delete(at offsets: IndexSet) {
-        statuses.remove(atOffsets: offsets)
+        userData.statuses.remove(atOffsets: offsets)
     }
 }
 
