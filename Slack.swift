@@ -67,7 +67,7 @@ class Slack {
     {
         print(emojisList)
         if (emojisList.index(forKey: emoji) == nil) {
-            return URL(string: "https://emoji.slack-edge.com/TCXJ4E73L/evil/933da964514615de.png")!;
+            return URL(fileReferenceLiteralResourceName: "questions.jpg");
         }
         
         return emojisList[emoji]!.url;
