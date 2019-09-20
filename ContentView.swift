@@ -62,6 +62,8 @@ struct ContentView: View {
                     print(self.userData.statuses)
                 }) {
                     Text("Add new status")
+                        .foregroundColor(.blue)
+                        .frame(alignment: .center)
                         
                 }
             }
