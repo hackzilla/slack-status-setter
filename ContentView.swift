@@ -51,10 +51,9 @@ struct ContentView: View {
                         Text(String(myStatus.expireHours) + " hours")
                             .frame(maxWidth: .infinity, alignment: .trailing)
                     }
-//                    .onDelete(perform: delete)
-
                 }
-                Spacer()
+                .onDelete(perform: delete)
+
                 Button(action: {
                     self.userData.statuses.append(
                         Status(emoji: ":slack:", description: "Being inspired", expireHours: 1)
@@ -77,8 +76,8 @@ struct ContentView: View {
         }
     }
       
-    mutating func delete(at offsets: IndexSet) {
-        userData.statuses.remove(atOffsets: offsets)
+    func delete(at offsets: IndexSet) {
+        self.userData.statuses.remove(atOffsets: offsets)
     }
 }
 
