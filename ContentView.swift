@@ -34,21 +34,6 @@ struct SettingView: View {
     }
 }
 
-struct EditView: View {
-    var status: Status
-
-    var body: some View {
-        VStack {
-            Text("SwiftUI")
-            Divider()
-            Text("SwiftUI")
-            Divider()
-            Text("SwiftUI")
-        }
-        .navigationBarTitle(Text("Edit"), displayMode: .inline)
-    }
-}
-
 struct ContentView: View {
     private var slackController = Slack()
     @ObservedObject var userData = UserData()
