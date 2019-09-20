@@ -73,7 +73,7 @@ struct ContentView: View {
                 Button(action: {
                     self.userData.statuses.append(
                         Status(emoji: ":slack:", description: "Being inspired", expireHours: 1)
-                        )
+                    )
                     print(self.userData.statuses)
                 }) {
                     Text("Add new status")
