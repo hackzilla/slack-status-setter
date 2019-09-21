@@ -18,19 +18,19 @@ private let defaultStatuses: [Status] = [
 ]
 
 final class UserData: ObservableObject {
-    let didChange = PassthroughSubject<UserData, Never>()
+    let objectWillChange = PassthroughSubject<Void, Never>()
 
     @UserDefault(key: "ApiToken", defaultValue: "")
     var apiToken: String {
-        didSet {
-            didChange.send(self)
+        willSet {
+            objectWillChange.send()
         }
     }
     
     @UserDefault(key: "Statuses", defaultValue: defaultStatuses)
     var statuses: [Status] {
-        didSet {
-            didChange.send(self)
+        willSet {
+            objectWillChange.send()
         }
     }
 }

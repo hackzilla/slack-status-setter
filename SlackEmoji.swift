@@ -3,7 +3,7 @@ import Foundation
 
 final class SlackEmojiFetcher: ObservableObject {
     private static let apiUrlString = "https://slack.com/api/emoji.list?token="
-    let didChange = PassthroughSubject<Void, Never>()
+    let objectWillChange = PassthroughSubject<Void, Never>()
 
     var emojiStore : [String: Emoji] = [:]
 
@@ -18,7 +18,7 @@ final class SlackEmojiFetcher: ObservableObject {
                         self.emojiStore[":\(emojiRow.key):"] = Emoji(emoji: ":\(emojiRow.key):", url: URL(string: emojiRow.value)!)
                     }
                     
-                    self.didChange.send()
+                    self.objectWillChange.send()
                 }
              }
              catch {
