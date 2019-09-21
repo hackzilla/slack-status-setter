@@ -7,15 +7,17 @@
 //
 
 import Foundation
+import SwiftUI
 
 class Slack {
-    private let token = "<Your token here>";
+    @EnvironmentObject var userData: UserData
+    
     private let clientId = "";
     private let clientSecret = "";
     private var emojisList : [String: Emoji] = [:];
     
     init() {
-        let fetcher = SlackEmojiFetcher(token: self.token);
+        let fetcher = SlackEmojiFetcher(token: UserData().apiToken);
         self.emojisList = fetcher.emojiStore;
     }
     
@@ -37,7 +39,7 @@ class Slack {
 
         urlComponents.queryItems = [
             URLQueryItem(name: "profile", value: String(data: profileData, encoding: .utf8)),
-            URLQueryItem(name: "token", value: self.token),
+            URLQueryItem(name: "token", value: UserData().apiToken),
         ]
         
         var request = URLRequest(url: (urlComponents.url!))
