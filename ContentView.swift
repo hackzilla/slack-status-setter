@@ -13,7 +13,7 @@ import SwiftUI
 import URLImage
 
 struct SettingView: View {
-    @ObservedObject var userData = UserData()
+    @EnvironmentObject var userData: UserData
 
     var body: some View {
         Form {
@@ -35,7 +35,7 @@ struct SettingView: View {
 
 struct ContentView: View {
     private var slackController = Slack()
-    @ObservedObject var userData = UserData()
+    @EnvironmentObject var userData: UserData
 
     var body: some View {
         return NavigationView {
