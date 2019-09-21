@@ -60,7 +60,6 @@ struct ContentView: View {
                     self.userData.statuses.append(
                         Status(emoji: ":slack:", description: "Being inspired", expireHours: 1)
                     )
-                    print(self.userData.statuses)
                 }) {
                     Text("Add new status")
                         .foregroundColor(.blue)
