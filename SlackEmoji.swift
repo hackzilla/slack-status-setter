@@ -15,7 +15,6 @@ final class SlackEmojiFetcher: ObservableObject {
                 let swift = try JSONDecoder().decode(EmojiResponse.self, from: json)
                 DispatchQueue.main.async {
                     for emojiRow in swift.emoji {
-                        self.emojiStore[":"+emojiRow.key+":"] = Emoji(emoji: emojiRow.key, url: URL(string: emojiRow.value)!)
                         self.emojiStore[":\(emojiRow.key):"] = Emoji(emoji: ":\(emojiRow.key):", url: URL(string: emojiRow.value)!)
                     }
                     
