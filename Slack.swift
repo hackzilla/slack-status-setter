@@ -71,6 +71,9 @@ class Slack {
         if (emojisList.index(forKey: emoji) == nil) {
             return URL(fileReferenceLiteralResourceName: "questions.jpg");
         }
+        else if (emoji.hasPrefix("alias:")) {
+            return self.emojiUrl(emoji: String(emoji.dropFirst(5)) + ":")
+        }
         
         return emojisList[emoji]!.url;
     }
