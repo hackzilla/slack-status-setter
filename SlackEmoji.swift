@@ -5,7 +5,11 @@ final class SlackEmojiFetcher: ObservableObject {
     private static let apiUrlString = "https://slack.com/api/emoji.list?token="
     let objectWillChange = PassthroughSubject<Void, Never>()
 
-    var emojiStore : [String: Emoji] = [:]
+    @Published var emojiStore : [String: Emoji] = [:] {
+       willSet {
+           objectWillChange.send()
+       }
+    }
 
     init(token : String) {
         guard let url: URL = URL(string: SlackEmojiFetcher.apiUrlString + token) else { return }
