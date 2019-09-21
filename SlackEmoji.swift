@@ -16,6 +16,7 @@ final class SlackEmojiFetcher: ObservableObject {
                 DispatchQueue.main.async {
                     for emojiRow in swift.emoji {
                         self.emojiStore[":"+emojiRow.key+":"] = Emoji(emoji: emojiRow.key, url: URL(string: emojiRow.value)!)
+                        self.emojiStore[":\(emojiRow.key):"] = Emoji(emoji: ":\(emojiRow.key):", url: URL(string: emojiRow.value)!)
                     }
                     
                     self.didChange.send()
