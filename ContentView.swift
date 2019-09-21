@@ -7,7 +7,6 @@
 //
 
 // https://stackoverflow.com/questions/56822195/how-do-i-use-userdefaults-with-swiftui
-// https://mecid.github.io/2019/06/19/building-forms-with-swiftui/
 
 import Combine
 import SwiftUI
