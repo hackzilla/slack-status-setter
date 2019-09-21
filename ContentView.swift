@@ -51,6 +51,9 @@ struct ContentView: View {
                         Text(String(myStatus.expireHours) + " hours")
                             .frame(maxWidth: .infinity, alignment: .trailing)
                     }
+                    .onTapGesture {
+                        self.slackController.setStatus(text: myStatus.description, emoji: myStatus.emoji)
+                    }
                 }
                 .onDelete(perform: delete)
 
