@@ -34,7 +34,7 @@ struct SettingView: View {
 }
 
 struct ContentView: View {
-    private var slackController = Slack()
+    @ObservedObject private var slackController = Slack()
     @EnvironmentObject var userData: UserData
 
     var body: some View {
@@ -42,7 +42,7 @@ struct ContentView: View {
             List {
                 ForEach(self.userData.statuses) { myStatus in
                     HStack {
-                        URLImage(self.slackController.emojiUrl(emoji: myStatus.emoji), configuration: ImageLoaderConfiguration(delay: 0.25))
+                        URLImage(self.slackController.emojiStore[myStatus.emoji] ?? self.slackController.missingImage, configuration: ImageLoaderConfiguration(delay: 0.25))
                             .resizable()
                             .frame(width: 50.0, height: 50.0, alignment: .leading)
                             .clipped()
