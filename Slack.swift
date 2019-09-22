@@ -76,8 +76,11 @@ class Slack: ObservableObject {
         .resume()
     }
     
-    func setStatus(text: String, emoji: String)
+    func setStatus(status: Status)
     {
+        let emoji: String = status.emoji
+        let text: String = status.description
+
         guard let profileData = try? JSONEncoder().encode(StatusRequest(status_text: text, status_emoji: emoji)) else {
             print("Error UploadData: ")
             return

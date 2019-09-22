@@ -34,28 +34,45 @@ struct SettingView: View {
 }
 
 struct EditView: View {
-    @ObservedObject private var slackController = Slack()
+    @EnvironmentObject var userData: UserData
+    let editStatus : Status
 
-    @State var emoji: String;
-    @State var description: String;
+    private var emoji: State<String>;
+    private var description: State<String>;
+    
+    init(status: Status) {
+        self.editStatus = status;
+        self.emoji = .init(initialValue: self.editStatus.emoji)
+        self.description = .init(initialValue: self.editStatus.description)
+    }
     
     var body: some View {
         return Form {
             Section {
-                Picker(selection: self.$emoji, label: Text("\(self.emoji)")) {
-                    ForEach(0 ..< self.slackController.emojiArray.count) {
-//                        HStack {
-                            URLImage(self.slackController.emojiArray[$0].url, configuration: ImageLoaderConfiguration(delay: 0.25))
-                            .resizable()
-                            .frame(width: 50.0, height: 50.0, alignment: .leading)
-                            .clipped()
-                            .tag(self.slackController.emojiArray[$0].emoji)
-//                            Text(self.slackController.emojiArray[$0].emoji)
-//                        }
-                    }
-                }
+//                Picker(selection: self.$emoji, label: Text("\(self.emoji)")) {
+//                    ForEach(0 ..< self.slackController.emojiArray.count) {
+////                        HStack {
+//                            URLImage(self.slackController.emojiArray[$0].url, configuration: ImageLoaderConfiguration(delay: 0.25))
+//                            .resizable()
+//                            .frame(width: 50.0, height: 50.0, alignment: .leading)
+//                            .clipped()
+//                            .tag(self.slackController.emojiArray[$0].emoji)
+////                            Text(self.slackController.emojiArray[$0].emoji)
+////                        }
+//                    }
+//                }
                 
-                TextField("", text: self.$description)
+                TextField("Emoji e.g. :car:", text: self.emoji.projectedValue)
+                TextField("Status text", text: self.description.projectedValue)
+            }
+            
+            Button(action: {
+                guard let index = self.userData.statuses.firstIndex(of: self.editStatus) else { return }
+                self.userData.statuses[index] = Status(emoji: self.emoji.wrappedValue, description: self.description.wrappedValue, expireHours: 0) ;
+            }) {
+                Text("Save")
+                    .foregroundColor(.blue)
+                    .frame(alignment: .center)
 
             }
         }
@@ -80,7 +97,7 @@ struct ContentView: View {
                         Text(myStatus.description)
                                 
                         if (self.isEditing) {
-                            NavigationLink(destination: EditView(emoji: myStatus.emoji, description : myStatus.description)) {
+                            NavigationLink(destination: EditView(status: myStatus).environmentObject(self.userData)) {
                                 Text("")
                             }
                         } else {
@@ -95,7 +112,7 @@ struct ContentView: View {
                     }
                     .onTapGesture {
                         if (!self.isEditing) {
-                            self.slackController.setStatus(text: myStatus.description, emoji: myStatus.emoji)
+                            self.slackController.setStatus(status: myStatus)
                         }
                     }
                 }
