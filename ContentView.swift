@@ -13,6 +13,7 @@ import SwiftUI
 import URLImage
 
 struct SettingView: View {
+    @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var userData: UserData
 
     var body: some View {
@@ -23,6 +24,7 @@ struct SettingView: View {
             }
             Section {
                 Button(action: {
+                    self.presentationMode.wrappedValue.dismiss()
 //                    self.settings.apiToken = self.apiToken
                 }) {
                     Text("Save changes")
@@ -34,6 +36,7 @@ struct SettingView: View {
 }
 
 struct EditView: View {
+    @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var userData: UserData
     let editStatus : Status
 
@@ -69,6 +72,7 @@ struct EditView: View {
             Button(action: {
                 guard let index = self.userData.statuses.firstIndex(of: self.editStatus) else { return }
                 self.userData.statuses[index] = Status(emoji: self.emoji.wrappedValue, description: self.description.wrappedValue, expireHours: 0) ;
+                self.presentationMode.wrappedValue.dismiss()
             }) {
                 Text("Save")
                     .foregroundColor(.blue)
