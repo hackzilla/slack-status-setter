@@ -21,6 +21,12 @@ class Slack: ObservableObject {
        }
     }
     
+    @Published var emojiArray : [Emoji] = [] {
+       willSet {
+           objectWillChange.send()
+       }
+    }
+    
     let missingImage : URL = URL(fileReferenceLiteralResourceName: "questions.jpg")
     private static let apiUrlString = "https://slack.com/api/emoji.list?token="
 
@@ -47,12 +53,17 @@ class Slack: ObservableObject {
                             
                         self.emojiStore[":\(emojiRow.key):"] = URL(string: emojiRow.value)!
                     }
-                        
+                    
                     for (key, value) in aliasEmoji {
                         let emojiURL : URL = self.emojiStore[value.dropFirst(5) + ":"]!
                         self.emojiStore[":\(key):"] = emojiURL
+//                        self.emojiArray.append(Emoji(emoji: ":\(key):", url: emojiURL))
                     }
-                    
+
+                    for key in self.emojiStore.keys.sorted() {
+                        self.emojiArray.append(Emoji(emoji: key, url: self.emojiStore[key]!))
+                    }
+
                     print(self.emojiStore)
                     self.objectWillChange.send()
                 }
