@@ -25,4 +25,4 @@ This is a work in progress. If you'd like to help, then any help would be apprec
 
 ## Licence
 
-See licence file.
+See [license](LICENSE.md) file.
