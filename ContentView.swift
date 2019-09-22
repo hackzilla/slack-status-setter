@@ -47,8 +47,14 @@ struct ContentView: View {
                             .frame(width: 50.0, height: 50.0, alignment: .leading)
                             .clipped()
                         Text(myStatus.description)
-                        Text(String(myStatus.expireHours) + " hours")
-                            .frame(maxWidth: .infinity, alignment: .trailing)
+        
+//                        if (myStatus.expireHours > 0) {
+//                            Text(String(myStatus.expireHours)! + " hours")
+//                                .frame(maxWidth: .infinity, alignment: .trailing)
+//                        } else {
+                            Text("Never")
+                                .frame(maxWidth: .infinity, alignment: .trailing)
+//                        }
                     }
                     .onTapGesture {
                         self.slackController.setStatus(text: myStatus.description, emoji: myStatus.emoji)
