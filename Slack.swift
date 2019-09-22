@@ -6,27 +6,51 @@
 //  Copyright © 2019 Daniel Platt. All rights reserved.
 //
 
+import Combine
 import Foundation
 import SwiftUI
 
 class Slack {
     @EnvironmentObject var userData: UserData
+
+    let objectWillChange = PassthroughSubject<Void, Never>()
+
+    @Published var emojiStore : [String: Emoji] = [:] {
+       willSet {
+           objectWillChange.send()
+       }
+    }
+
+    private static let apiUrlString = "https://slack.com/api/emoji.list?token="
     
     private let clientId = "";
     private let clientSecret = "";
-    private var emojisList : [String: Emoji] = [:];
-    
+
     init() {
-        let fetcher = SlackEmojiFetcher(token: UserData().apiToken);
-        self.emojisList = fetcher.emojiStore;
+        guard let url: URL = URL(string: Slack.self.apiUrlString + UserData().apiToken) else { return }
+
+         URLSession.shared.dataTask(with: url) { (data, response, error) in
+             do {
+                guard let json = data else { return }
+                print(json)
+                let swift = try JSONDecoder().decode(EmojiResponse.self, from: json)
+                DispatchQueue.main.async {
+                    print(swift.emoji)
+                    for emojiRow in swift.emoji {
+                        self.emojiStore[":\(emojiRow.key):"] = Emoji(emoji: ":\(emojiRow.key):", url: URL(string: emojiRow.value)!)
+                    }
+                    
+                    print(self.emojiStore)
+                    self.objectWillChange.send()
+                }
+             }
+             catch {
+                 print(error)
+                
+             }
+         }
+        .resume()
     }
-    
-//    func updateEmoji(emojis: [String: Any]?) -> Void
-//    {
-//        print(emojis as Any);
-//
-//
-//    }
     
     func setStatus(text: String, emoji: String)
     {
@@ -62,19 +86,19 @@ class Slack {
     
     func emojis() -> [String: Emoji]
     {
-        return self.emojisList
+        return self.emojiStore
     }
     
     func emojiUrl(emoji: String) -> URL
     {
-        print(emojisList)
-        if (emojisList.index(forKey: emoji) == nil) {
+        if (self.emojiStore.index(forKey: emoji) == nil) {
+            print("Missing: \(emoji)");
             return URL(fileReferenceLiteralResourceName: "questions.jpg");
         }
         else if (emoji.hasPrefix("alias:")) {
             return self.emojiUrl(emoji: String(emoji.dropFirst(5)) + ":")
         }
         
-        return emojisList[emoji]!.url;
+        return self.emojiStore[emoji]!.url;
     }
 }
