@@ -84,6 +84,38 @@ struct EditView: View {
     }
 }
 
+struct RowView: View {
+    @ObservedObject private var slackController = Slack()
+    @EnvironmentObject var userData: UserData
+
+    let myStatus : Status
+    var isEditing: Bool
+
+    var body: some View {
+      HStack {
+            URLImage(self.slackController.emojiStore[myStatus.emoji] ?? self.slackController.missingImage, configuration: ImageLoaderConfiguration(delay: 0.25))
+                .resizable()
+                .frame(width: 50.0, height: 50.0, alignment: .leading)
+                .clipped()
+            Text(myStatus.description)
+                    
+            if (self.isEditing) {
+                NavigationLink(destination: EditView(status: myStatus).environmentObject(self.userData)) {
+                    Text("")
+                }
+            } else {
+//                            if (myStatus.expireHours > 0) {
+//                                Text(String(myStatus.expireHours)! + " hours")
+//                                    .frame(maxWidth: .infinity, alignment: .trailing)
+//                            } else {
+                    Text("Never")
+                        .frame(maxWidth: .infinity, alignment: .trailing)
+//                            }
+            }
+        }
+    }
+}
+
 struct ContentView: View {
     @ObservedObject private var slackController = Slack()
     @EnvironmentObject var userData: UserData
@@ -93,31 +125,13 @@ struct ContentView: View {
         return NavigationView {
             List {
                 ForEach(self.userData.statuses) { myStatus in
-                    HStack {
-                        URLImage(self.slackController.emojiStore[myStatus.emoji] ?? self.slackController.missingImage, configuration: ImageLoaderConfiguration(delay: 0.25))
-                            .resizable()
-                            .frame(width: 50.0, height: 50.0, alignment: .leading)
-                            .clipped()
-                        Text(myStatus.description)
-                                
-                        if (self.isEditing) {
-                            NavigationLink(destination: EditView(status: myStatus).environmentObject(self.userData)) {
-                                Text("")
-                            }
-                        } else {
-//                            if (myStatus.expireHours > 0) {
-//                                Text(String(myStatus.expireHours)! + " hours")
-//                                    .frame(maxWidth: .infinity, alignment: .trailing)
-//                            } else {
-                                Text("Never")
-                                    .frame(maxWidth: .infinity, alignment: .trailing)
-//                            }
-                        }
-                    }
-                    .onTapGesture {
-                        if (!self.isEditing) {
+                    if (!self.isEditing) {
+                        RowView(myStatus: myStatus, isEditing: self.isEditing)
+                        .onTapGesture(count: self.isEditing ? 0 : 1) {
                             self.slackController.setStatus(status: myStatus)
                         }
+                    } else {
+                        RowView(myStatus: myStatus, isEditing: self.isEditing)
                     }
                 }
                 .onDelete(perform: delete)
