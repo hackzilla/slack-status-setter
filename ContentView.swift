@@ -127,7 +127,7 @@ struct ContentView: View {
                 ForEach(self.userData.statuses) { myStatus in
                     if (!self.isEditing) {
                         RowView(myStatus: myStatus, isEditing: self.isEditing)
-                        .onTapGesture(count: self.isEditing ? 0 : 1) {
+                        .onTapGesture {
                             self.slackController.setStatus(status: myStatus)
                         }
                     } else {
