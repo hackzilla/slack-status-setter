@@ -146,6 +146,16 @@ struct ContentView: View {
                         .frame(alignment: .center)
 
                 }
+                
+                Button(action: {
+                    self.slackController.clearStatus()
+                }) {
+                    Text("Clear current status")
+                        .foregroundColor(.blue)
+                        .frame(alignment: .center)
+
+                }
+                
                 NavigationLink(destination: SettingView()) {
                     Text("Settings")
                     Image(systemName: "gear")

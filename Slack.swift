@@ -76,6 +76,11 @@ class Slack: ObservableObject {
         .resume()
     }
     
+    func clearStatus()
+    {
+        self.setStatus(status: Status(emoji: "", description: "", expireHours: 0))
+    }
+    
     func setStatus(status: Status)
     {
         let emoji: String = status.emoji
