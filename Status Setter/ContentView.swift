@@ -6,10 +6,9 @@
 //  Copyright © 2019 Daniel Platt. All rights reserved.
 //
 
-// https://stackoverflow.com/questions/56822195/how-do-i-use-userdefaults-with-swiftui
-
 import Combine
 import SwiftUI
+import URLImage
 
 struct ContentView: View {
     @ObservedObject private var slackController = Slack()
@@ -17,61 +16,22 @@ struct ContentView: View {
     @State var isEditing: Bool = false
 
     var body: some View {
-        return NavigationView {
-            List {
-                ForEach(self.userData.statuses) { myStatus in
-                    if (!self.isEditing) {
-                        NavigationLink(destination: SetStatusView(myStatus: myStatus)) {
-                            RowView(myStatus: myStatus, isEditing: self.isEditing)
-                        }
-                    } else {
-                        NavigationLink(destination: EditView(status: myStatus).environmentObject(self.userData)) {
-                        RowView(myStatus: myStatus, isEditing: self.isEditing)
-                        }
-                    }
-                }
-                .onDelete(perform: delete)
-
-                Button(action: {
-                    self.userData.statuses.append(
-                        Status(emoji: ":slack:", description: "Being inspired", expireHours: 1)
-                    )
-                }) {
-                    Text("Add new status")
-                        .foregroundColor(.blue)
-                        .frame(alignment: .center)
-
-                }
-                
-                Button(action: {
-                    self.slackController.clearStatus()
-                }) {
-                    Text("Clear current status")
-                        .foregroundColor(.blue)
-                        .frame(alignment: .center)
-
-                }
-                
-                NavigationLink(destination: SettingView()) {
-                    Text("Settings")
-                    Image(systemName: "gear")
-                }
+        VStack {
+            Image("logo")
+                .cornerRadius(20)
+            Text("Status Setter")
+                .font(.largeTitle)
+            
+            Button(action: {
+            }) {
+                Image("slack")
             }
-            .navigationBarTitle(Text("Statuses"))
-            .navigationBarItems(
-                trailing: Button(action: { self.isEditing.toggle() }) {
-                if !self.isEditing {
-                    Text("Edit")
-                } else {
-                    Text("Done").bold()
-                }
-            })
+            .frame(minWidth: 0, maxWidth: .infinity)
+            .padding([.leading, .trailing], 20)
+
         }
     }
       
-    func delete(at offsets: IndexSet) {
-        self.userData.statuses.remove(atOffsets: offsets)
-    }
 }
 
 struct ContentView_Previews: PreviewProvider {
