@@ -11,4 +11,5 @@ import Foundation
 struct StatusRequest: Codable {
     let status_text: String
     let status_emoji: String
+    let status_expiration: Int
 }

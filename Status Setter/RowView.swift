@@ -26,20 +26,7 @@ struct RowView: View {
                 .frame(width: 50.0, height: 50.0, alignment: .leading)
                 .clipped()
             Text(myStatus.description)
-                    
-            if (self.isEditing) {
-                NavigationLink(destination: EditView(status: myStatus).environmentObject(self.userData)) {
-                    Text("")
-                }
-            } else {
-//                            if (myStatus.expireHours > 0) {
-//                                Text(String(myStatus.expireHours)! + " hours")
-//                                    .frame(maxWidth: .infinity, alignment: .trailing)
-//                            } else {
-                    Text("Never")
-                        .frame(maxWidth: .infinity, alignment: .trailing)
-//                            }
-            }
+        
         }
     }
 }

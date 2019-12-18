@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  StatusView.swift
 //  Status Setter
 //
 //  Created by Daniel Platt on 18/09/2019.
@@ -11,7 +11,7 @@
 import Combine
 import SwiftUI
 
-struct ContentView: View {
+struct StatusView: View {
     @ObservedObject private var slackController = Slack()
     @EnvironmentObject var userData: UserData
     @State var isEditing: Bool = false
@@ -74,8 +74,8 @@ struct ContentView: View {
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct StatusView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        StatusView()
     }
 }

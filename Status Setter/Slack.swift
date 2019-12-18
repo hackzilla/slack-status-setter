@@ -85,8 +85,13 @@ class Slack: ObservableObject {
     {
         let emoji: String = status.emoji
         let text: String = status.description
+        var expiration : Int = 0
+        
+        if (status.expireHours > 0) {
+            expiration = Int(Date().timeIntervalSince1970) + (status.expireHours * 60)
+        }
 
-        guard let profileData = try? JSONEncoder().encode(StatusRequest(status_text: text, status_emoji: emoji)) else {
+        guard let profileData = try? JSONEncoder().encode(StatusRequest(status_text: text, status_emoji: emoji, status_expiration: expiration)) else {
             print("Error UploadData: ")
             return
         }
