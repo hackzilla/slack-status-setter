@@ -21,8 +21,8 @@ struct RowView: View {
 
     var body: some View {
       HStack {
-            URLImage(self.slackController.emojiStore[myStatus.emoji] ?? self.slackController.missingImage, configuration: ImageLoaderConfiguration(delay: 0.25))
-                .resizable()
+            URLImage(self.slackController.emojiStore[myStatus.emoji] ?? self.slackController.missingImage, delay: 0.25)
+            //                .resizable()
                 .frame(width: 50.0, height: 50.0, alignment: .leading)
                 .clipped()
             Text(myStatus.description)
