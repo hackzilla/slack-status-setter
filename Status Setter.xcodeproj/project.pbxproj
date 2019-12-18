@@ -74,7 +74,7 @@
 		D0BE62DA23A900BF003D062A /* RowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RowView.swift; sourceTree = "<group>"; };
 		D0BE62DB23A900BF003D062A /* UserData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		D0BE62DC23A900C0003D062A /* SettingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
-		D0BE62DE23A900C0003D062A /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		D0BE62DE23A900C0003D062A /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		D0BE62DF23A900C0003D062A /* questions.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = questions.jpg; sourceTree = "<group>"; };
 		D0BE62E823A900E1003D062A /* Status.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Status.swift; sourceTree = "<group>"; };
 		D0BE62EA23A900E1003D062A /* SlackEmoji.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlackEmoji.swift; sourceTree = "<group>"; };
@@ -114,6 +114,7 @@
 		3749056D23323CAB00848965 = {
 			isa = PBXGroup;
 			children = (
+				D0BE62DE23A900C0003D062A /* README.md */,
 				3749057823323CAB00848965 /* Status Setter */,
 				3749059223323CAC00848965 /* Status SetterTests */,
 				3749059D23323CAD00848965 /* Status SetterUITests */,
@@ -142,7 +143,6 @@
 				3749058A23323CAC00848965 /* Info.plist */,
 				D0BE62D823A900BF003D062A /* EditView.swift */,
 				D0BE62DF23A900C0003D062A /* questions.jpg */,
-				D0BE62DE23A900C0003D062A /* README.md */,
 				D0BE62DA23A900BF003D062A /* RowView.swift */,
 				D0BE62DC23A900C0003D062A /* SettingView.swift */,
 				D0BE62EC23A900E1003D062A /* StatusRequest.swift */,
