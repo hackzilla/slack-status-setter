@@ -2,12 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "sign_in_with_slack.png",
+      "filename" : "sign_in_with_slack@2x.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "sign_in_with_slack@2x.png",
       "scale" : "2x"
     },
     {
