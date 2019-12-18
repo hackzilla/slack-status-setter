@@ -26,7 +26,7 @@ struct ContentView: View {
                         }
                     } else {
                         NavigationLink(destination: EditView(status: myStatus).environmentObject(self.userData)) {
-                        RowView(myStatus: myStatus, isEditing: self.isEditing)
+                            RowView(myStatus: myStatus, isEditing: self.isEditing)
                         }
                     }
                 }

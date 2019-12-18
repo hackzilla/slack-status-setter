@@ -28,15 +28,14 @@ struct SetStatusView: View {
     ]
     
     @State private var selectedMode = 0
-     
-    
+
     var body: some View {
         return Form {
             Section {
                 Text(myStatus.description)
                 
                 Picker(selection: $selectedMode, label: Text("Clear after")) {
-                    ForEach(0..<clearStatus.count) {
+                    ForEach(0 ..< clearStatus.count) {
                         Text(self.clearStatus[$0])
                     }
                 }
